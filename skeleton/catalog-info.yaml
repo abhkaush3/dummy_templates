@@ -1,7 +1,7 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: "This name will not change"
+  name: "This-name-will-not-change"
   description: "This discription will not change"
   annotations:
     github.com/project-slug: ${{values.destination.owner + "/" + values.destination.repo}}
