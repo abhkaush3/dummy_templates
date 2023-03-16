@@ -7,6 +7,6 @@ metadata:
     github.com/project-slug: ${{values.destination.owner + "/" + values.destination.repo}}
     backstage.io/techdocs-ref: dir:.
 spec:
-  type: pipeline
+  type: service
   lifecycle: experimental
   owner: "demo"
