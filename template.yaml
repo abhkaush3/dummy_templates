@@ -1,33 +1,30 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: test-pipeline-template
-  title: Test Pipeline
-  description: Create a new standalone documentation project
+  name: Test Pipeline
+  title: Create React App Template
+  description: Create a new CRA website project
   tags:
-    - recommended
-    - techdocs
-    - mkdocs
+    - react
+    - cra
 spec:
-  owner: backstage/techdocs-core
-  type: documentation
-
+  owner: web@example.com
+  type: website
   parameters:
-    - title: Fill in some steps
+    - title: Provide some simple information
       required:
-        - name
-        - description
+        - component_id
+        - owner
       properties:
-        name:
+        component_id:
           title: Name
           type: string
           description: Unique name of the component
           ui:field: EntityNamePicker
-          ui:autofocus: true
         description:
           title: Description
           type: string
-          description: A description for the component
+          description: Help others understand what this website is for.
         owner:
           title: Owner
           type: string
@@ -47,18 +44,16 @@ spec:
           ui:options:
             allowedHosts:
               - github.com
-
-  # This template is meant to be used on top of an existing template.
-  # By adding the following and fetching from an absolute URL you can
-  # add in the docs template
   steps:
-    - id: fetch
-      name: Template Docs Skeleton
+    - id: template
+      name: Fetch Skeleton + Template
       action: fetch:template
       input:
         url: ./skeleton
+        copyWithoutRender:
+          - .github/workflows/*
         values:
-          name: ${{ parameters.name }}
+          component_id: ${{ parameters.component_id }}
           description: ${{ parameters.description }}
           destination: ${{ parameters.repoUrl | parseRepoUrl }}
           owner: ${{ parameters.owner }}
@@ -67,8 +62,9 @@ spec:
       name: Publish
       action: publish:github
       input:
-        allowedHosts: ["github.com"]
-        description: This is ${{ parameters.name }}
+        allowedHosts:
+          - github.com
+        description: This is ${{ parameters.component_id }}
         repoUrl: ${{ parameters.repoUrl }}
 
     - id: register
